@@ -1,0 +1,35 @@
+<h1>Home</h1>
+<table>
+	<tr>
+		<% (1..4).each do |number| %>
+		<td><%= link_to "#{number}", number_path(@numbers[number-1]) %></td>
+		<% end %>
+	</tr>
+	<tr>
+		<% (5..8).each do |number| %>
+		<td><%= link_to "#{number}", number_path(@numbers[number-1]) %></td>
+		<% end %>
+	</tr>
+	<tr>
+		<% (9..12).each do |number| %>
+		<td><%= link_to "#{number}", number_path(@numbers[number-1]) %></td>
+		<% end %>
+	</tr>
+	<tr>
+		<% (13..16).each do |number| %>
+		<td><%= link_to "#{number}", number_path(@numbers[number-1]) %></td>
+		<% end %>
+	</tr>
+</table>
+<script type="text/javascript">
+	$(function() {
+		$(window).click(function(event) {
+			pos_x = event.pageX
+			pos_y = event.pageY
+			$.post('/clicks', {click: {x: pos_x, y: pos_y}}, function(response) {
+				console.log(response)
+			});
+		});
+	});
+</script>
+

@@ -1,0 +1,22 @@
+<h1><%= @title %></h1>
+<script type="text/javascript">
+	var start;
+	$(function() {
+		$(window).click(function(event) {
+			pos_x = event.pageX
+			pos_y = event.pageY
+			$.post('/clicks', {click: {x: pos_x, y: pos_y}}, function(response) {
+				console.log(response)
+			});
+		});
+		start = Date.now();
+		if (window.history && window.history.pushState) {
+			$(window).on('popstate', function() {
+				number = (<%= @number %>)
+				$.post('/log', {visit: {number: number, time_spent: Date.now()-start}},function(response) {
+					console.log(response);
+				});
+			});
+		}
+	});
+</script>

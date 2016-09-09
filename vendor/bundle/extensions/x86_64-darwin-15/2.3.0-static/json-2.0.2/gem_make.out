@@ -1,0 +1,13 @@
+current directory: /Users/SamLerner/RubyWorkspace/NumberTracker/vendor/bundle/gems/json-2.0.2/ext/json
+/Users/SamLerner/.rbenv/versions/2.3.1/bin/ruby -r ./siteconf20160906-29510-9i0dq5.rb extconf.rb
+creating Makefile
+
+current directory: /Users/SamLerner/RubyWorkspace/NumberTracker/vendor/bundle/gems/json-2.0.2/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/SamLerner/RubyWorkspace/NumberTracker/vendor/bundle/gems/json-2.0.2/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/SamLerner/RubyWorkspace/NumberTracker/vendor/bundle/gems/json-2.0.2/ext/json
+make "DESTDIR=" install

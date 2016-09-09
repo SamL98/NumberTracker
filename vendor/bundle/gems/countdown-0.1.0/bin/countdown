@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+require "open-uri"
+require "json"
+require "yaml"
+
+API_URL = "http://countdown.tfl.gov.uk/stopBoard/%d"
+CONFIG_PATH = File.expand_path("~/.countdown.yml")
+
+unless File.exist?(CONFIG_PATH)
+  $stderr.puts "The configuration file #{CONFIG_PATH} is missing."
+  $stderr.puts "See https://github.com/adrianshort/countdown for instructions and a sample file."
+  exit 1
+end
+
+tree = YAML.parse(File.open(CONFIG_PATH))
+locations = tree["locations"].transform
+
+if ARGV[0]
+  arg = ARGV[0].strip.downcase
+  location = locations.find{ |loc| loc["name"].downcase == arg }
+
+  unless location
+    $stderr.puts "Location not found. #{CONFIG_PATH} contains the following locations:"
+    $stderr.puts *locations.map{ |loc| "- " + loc["name"] }
+    exit 1
+  end
+
+else
+  location = locations.first
+
+  unless location
+    $stderr.puts "There are no locations defined in your .countdown.yml file."
+    exit 1
+  end
+end
+
+location["stops"].each do |stop|
+  res = open(API_URL % stop["id"]){ |f| f.read }
+  data = JSON.parse(res)
+  
+  title = "#{stop["name"]} (#{stop["id"]})"
+  puts title, "-" * title.length, ""
+  
+  data["arrivals"].each do |bus|
+    puts "%-5s %-20s %-s" % [bus["routeName"], bus["destination"], bus["estimatedWait"]]
+  end
+
+  puts
+end
